@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  postgres:
+    depends_on:
+      - nuts
+    image: postgres:latest
+    container_name: l0_postgres
+    environment:
+      POSTGRES_DB: "lanchik"
+      POSTGRES_USER: "aslan"
+      POSTGRES_PASSWORD: "1302"
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db:/var/lib/postgresql/data
+
+  nuts:
+    image: nats-streaming:latest
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+    command:
+      - "--cluster_id"
+      - "test-cluster"
